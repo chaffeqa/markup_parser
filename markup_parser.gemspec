@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["chaffeqa@gmail.com"]
   gem.description   = %q{Standardized markup parsers to use a single format: an object.  Instantiate a specific markup class with text to output formated Html.  Allows for easy code block highlighting using a Proc; defaults to Uv (ruby Ultraviolet)}
   gem.summary       = %q{Standardized markup parsers to a single format.  Sole use is for converting markup text to Html. }
-  gem.homepage      = "https://chaffeqa@github.com/chaffeqa/markup_parser.git"
+  gem.homepage      = "https://github.com/chaffeqa/markup_parser"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
