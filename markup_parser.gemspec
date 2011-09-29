@@ -15,5 +15,11 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = MarkupParser::VERSION
 
+  gem.add_dependency 'redcarpet', '>= 2.0.0b5'
+  gem.add_dependency 'nokogiri'
   gem.add_dependency "uv"
+  gem.add_dependency 'rdoc'
+
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'minitest'
 end

@@ -1,7 +1,7 @@
 require 'rdoc/markup/to_html'
+
 module MarkupParser
   class Rdoc < MarkupParser::Default
-    puts "\n**************\nMarkupParser::Rdoc loaded\n**************\n"
 
 
 

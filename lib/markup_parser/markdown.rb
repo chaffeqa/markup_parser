@@ -1,14 +1,10 @@
+require 'redcarpet'
+require "#{File.dirname(__FILE__)}/markdown/string_extensions"
+require "#{File.dirname(__FILE__)}/markdown/uv_html_render"
+require "#{File.dirname(__FILE__)}/markdown/class_methods"
 module MarkupParser
   class Markdown < MarkupParser::Default
-    puts "\n**************\nMarkupParser::Markdown loaded\n**************\n"
 
-    # HTML renderer with Ultraviolet Code Lexer
-    class UvHtmlRender < Redcarpet::Render::HTML
-      puts "\n**************\nMarkupParser::Markdown::UvHtmlRender loaded\n**************\n"
-      def block_code(code, language)
-        Uv.parse(code, "xhtml", language, false, "railscasts")
-      end
-    end
 
 
     # Only loads the Markdown parser once
@@ -36,11 +32,6 @@ module MarkupParser
     }
 
 
-
-
-
-
-
     # Returns the fully stylized HTML for this markdown text
     def html_text
       @html_text ||= parser.render(@original_text)
@@ -48,11 +39,9 @@ module MarkupParser
 
     # Sets the parser to include as code lexer
     def stylize_code_blocks
-      @parser = Markdown.html_parser_with_code_lexer
+      @parser = MarkupParser::Markdown.html_parser_with_code_lexer
       self
     end
-
-
 
 
     private
@@ -60,7 +49,7 @@ module MarkupParser
     # Instantiates the parser for this Markdown instance.
     # Defaults to @@html_parser
     def parser
-      @parser ||= Markdown.html_parser
+      @parser ||= MarkupParser::Markdown.html_parser
     end
 
     # Hacks parse to return this instence's parser for a later call
@@ -76,41 +65,5 @@ module MarkupParser
       text
     end
 
-  end
-end
-
-
-
-
-# Adds classes to String class...
-class String
-
-  # Corrects the gh code block syntax mistake where one would write '~~~ .ruby'
-  # and the correct code should be '~~~ruby'
-  def correct_gh_code_syntax!
-    self.gsub!(/~~~\s\.([a-zA-Z]*)/, '~~~\1')
-  end
-
-  # Corrects the ol list elements: which only except the syntax: '1. ...'.
-  # Corrected syntaxes: '1)'
-  def correct_ol_list_parenth!
-    self.gsub!(/(\s*)(\d)\)/,'\1\2.')
-  end
-
-  # Converts tabs (\t) to 2 spaces
-  def convert_tabs_to_spaces!
-    self.gsub!(/\t/, "  ")
-  end
-
-  # Standardize line endings
-  def standardize_newlines!
-    self.gsub!("\r\n", "\n")
-    self.gsub!("\r", "\n")
-  end
-
-  # Corrects the newlines by stripping the leading whitespace.
-  # NOTE: this is a hack to workaround the strange Gollum editor indentation behavior
-  def sub_newlines!
-    self.gsub!(/([\r\n|\n])[\ ]*(.)/,'\1\2')
   end
 end

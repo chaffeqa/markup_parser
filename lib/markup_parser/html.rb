@@ -1,6 +1,5 @@
 module MarkupParser
   class Html < MarkupParser::Default
-    puts "\n**************\nMarkupParser::Html loaded\n**************\n"
 
     private
 
