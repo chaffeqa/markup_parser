@@ -13,5 +13,34 @@ So I created my own little library.
 
 ## Usage
 
+List the available markup parsers:
 
+    MarkupParser.format_parsers #=> { 'markdown' => MarkupParser::Markdown, 'rdoc' => MarkupParser::Rdoc }
 
+Parse some text to Html:
+
+    MarkupParser::Markdown.new("body").to_html #=> "<p>body<p>"
+
+**Note** that the `MarkupParser::Markdown` is the parser for Markdown, and can be reused by just creating a new instance.
+
+## Styling Code Blocks
+
+Another goal was to simplify code block styling.  MarkupParser doesn't stylize the code, but instead lets you easily accomplish it with your own code styler:
+
+    markup = MarkupParser::Html.new("<pre lang='ruby'>Class</pre>")
+    markup.stylize_code_blocks { |code, lang|
+      Albino.colorize(code, lang)
+    }
+    markup.to_html #=> "<pre class='highlight'><span class='class'>Class</span></pre>"
+    
+Or:
+
+    MarkupParser::Html.new("<pre lang='ruby'>Class</pre>").stylize_code_blocks { |code, lang|
+      Albino.colorize(code, lang)
+    }.to_html #=> "<pre class='highlight'><span class='class'>Class</span></pre>"
+    
+For each code block recognized by the markup language, `stylize_code_blocks` accepts a block with parameters: `code, lang` for you to use.
+
+## Adding Markup Parsers
+
+Ask me (Todo)
