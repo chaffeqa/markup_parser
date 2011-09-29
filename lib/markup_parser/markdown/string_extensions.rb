@@ -1,6 +1,5 @@
 # Adds classes to String class...
 class String
-puts "\n**************\nString Extensions loaded\n**************\n"
 
   # Corrects the gh code block syntax mistake where one would write '~~~ .ruby'
   # and the correct code should be '~~~ruby'

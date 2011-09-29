@@ -1,7 +1,6 @@
 require "markup_parser/version"
 
 module MarkupParser
-  puts "\n**************\nMarkupParser loaded\n**************\n"
 
   PARSER_PATH = File.join(File.dirname(__FILE__), 'markup_parser')
 
@@ -47,6 +46,13 @@ module MarkupParser
     else
       lower_case_and_underscored_word.to_s[0].chr.downcase + camelize(lower_case_and_underscored_word)[1..-1]
     end
+  end
+
+  def self.humanize(lower_case_and_underscored_word)
+    result = lower_case_and_underscored_word.to_s.dup
+
+    inflections.humans.each { |(rule, replacement)| break if result.gsub!(rule, replacement) }
+    result.gsub(/_id$/, "").gsub(/_/, " ").capitalize
   end
 
 end
