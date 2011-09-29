@@ -1,5 +1,5 @@
 require "markup_parser/version"
-require "markup_parers/default"
+require "markup_parser/default"
 
 module MarkupParser
 
