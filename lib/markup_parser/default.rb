@@ -2,7 +2,7 @@ require 'nokogiri'
 
 module MarkupParser
   class Default
-    attr_reader :original_text, :nokoguri_parser, :html_text, :lexer_proc
+    attr_reader :original_text, :nokogiri_parser, :html_text, :lexer_proc
 
     def initialize(text='', &lexer)
       @original_text = hot_fixes(text)
@@ -13,7 +13,7 @@ module MarkupParser
     # Returns the fully stylized and sanitized HTML
     def to_html
       begin
-        nokoguri_parser.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML)
+        nokogiri_parser.to_xhtml(:save_with => Nokogiri::XML::Node::SaveOptions::AS_XHTML)
       rescue => e
         puts <<-ERROR
         ******************
@@ -28,17 +28,17 @@ module MarkupParser
 
 
     # Instantiates a Nokoguri::HTML fragment parser
-    def nokoguri_parser
+    def nokogiri_parser
       begin
-        @nokoguri_parser ||= ::Nokogiri::HTML::DocumentFragment.parse(html_text)
+        @nokogiri_parser ||= ::Nokogiri::HTML::DocumentFragment.parse(html_text)
       rescue => e
         puts "
         \n******************
-        Error in #{self.class}#nokoguri_parser.
+        Error in #{self.class}#nokogiri_parser.
         Reason: #{e.message}.
         Putting error message into the output.
         ******************\n"
-        @nokoguri_parser = ::Nokogiri::HTML::DocumentFragment.parse("<p class='parse_error'>Error in parsing in #{self.class}: #{e.message}.</p>")
+        @nokogiri_parser = ::Nokogiri::HTML::DocumentFragment.parse("<p class='parse_error'>Error in parsing in #{self.class}: #{e.message}.</p>")
       end
     end
 
@@ -60,7 +60,7 @@ module MarkupParser
     # Stylizes the code blocks in the html_text.
     # Uses either a passed in lexer Proc or the default_lexer
     def stylize_code_blocks
-        nokoguri_parser.search('pre').each do |node|
+        nokogiri_parser.search('pre').each do |node|
           begin
             next unless lang = node['lang']
             text = node.inner_text

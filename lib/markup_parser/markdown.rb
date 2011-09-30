@@ -32,6 +32,9 @@ module MarkupParser
     }
 
 
+
+
+
     # Returns the fully stylized HTML for this markdown text
     def html_text
       @html_text ||= parser.render(@original_text)
