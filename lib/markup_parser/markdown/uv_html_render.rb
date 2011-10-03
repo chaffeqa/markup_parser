@@ -4,12 +4,13 @@ class UvHtmlRender < Redcarpet::Render::HTML
     begin
       return Uv.parse(code, "xhtml", language, false, "railscasts")
     rescue => e
-      puts "
-      \n******************
-      Error in parsing <pre lang=''> block.
-      Reason: #{e.message}.
-      Continueing code block parsing.
-      ******************\n"
+      puts <<-DEBUG
+******************
+Error in parsing <pre lang='#{language.to_s}'> block.
+Reason: #{e.message}.
+Continueing code block parsing.
+******************
+      DEBUG
       return code
     end
   end
